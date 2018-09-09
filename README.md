@@ -1,8 +1,8 @@
 基础依赖
 ===
 
-[![Build Status](https://travis-ci.com/lsys/core.svg?branch=next_version)](https://travis-ci.com/lsys/core)
-[![Coverage Status](https://coveralls.io/repos/github/lsys/core/badge.svg?branch=next_version)](https://coveralls.io/github/lsys/core?branch=next_version)
+[![Build Status](https://travis-ci.com/lsys/core.svg?branch=master)](https://travis-ci.com/lsys/core)
+[![Coverage Status](https://coveralls.io/repos/github/lsys/core/badge.svg?branch=master)](https://coveralls.io/github/lsys/core?branch=master)
 
 ＞解决类依赖的定义规范和基本的环境变量
 
