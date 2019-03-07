@@ -18,7 +18,7 @@ class dome_c{
 }
 //1. 定义外部调用接口
 /**
- * @method dome_c　dome_c() 获取dome_c的全局单例
+ * @method domeC　domeC() 获取dome_c的全局单例
  */
 class dome_di extends DI{
     /**
@@ -28,23 +28,23 @@ class dome_di extends DI{
         $di=parent::get();
         //以下可二选一进行注册:
         //注册默认处理,当外部无注册时候使用
-        !isset($di->dome_c)&&$di->dome_c(new \LSYS\DI\SingletonCallback(function (){
+        !isset($di->domeC)&&$di->domeC(new \LSYS\DI\SingletonCallback(function (){
             return new dome_c(new dome_a(),new dome_b());
         }));
         //注册虚拟方法
-        $di->dome_c(new \LSYS\DI\VirtualCallback(dome_c::class));
+        $di->domeC(new \LSYS\DI\VirtualCallback(dome_c::class));
         return $di;
     }
 }
 
 // 2. 重置你的实现[可选]
 dome_di::set(function (){
-    return (new dome_di)->dome_c(new \LSYS\DI\SingletonCallback(function (){
+    return (new dome_di)->domeC(new \LSYS\DI\SingletonCallback(function (){
         return new dome_c(new dome_a(),new dome_b());
     }));
 });
 
 
 //3. 调用
-$dome_c=dome_di::get()->dome_c();
+$dome_c=dome_di::get()->domeC();
 var_dump($dome_c);

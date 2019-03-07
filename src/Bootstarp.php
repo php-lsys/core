@@ -16,7 +16,7 @@ if (function_exists('mb_internal_encoding')){
 //     'environment'=>LSYS\Core::$environment
 // ));
 //di reg share object
-// LSYS\DI::get()->function_name(new Callback(function(){
+// LSYS\DI::get()->functionName(new Callback(function(){
 //     return share_object;
 // },true));
 // DI::set(function(){
