@@ -2,6 +2,11 @@
 use LSYS\DI;
 include __DIR__."/Bootstarp.php";
 
+
+//取对象:先检查以当前类名为key的对象管理器是否存在,不存在取公用的对象管理器
+//公共的对象管理器在编写类时候,会注册获取该类对象的方法.当用户编写代码时候没有主动注册时,该方法会被调用
+//设置获取对象:调用管理的SET静态方法设置以当前类名为KEY的对象管理器.所以在上面取对象时候就不会再调用公共对象管理器
+
 //可解决以下３个问题:
 //1. 全局一个DI依赖
 //2. 局部一个DI依赖
@@ -16,7 +21,7 @@ class dome_c{
         //你的具体业务
     }
 }
-//1. 定义外部调用接口
+//1. 定义外部调用接口 [必须]
 /**
  * @method domeC　domeC() 获取dome_c的全局单例
  */
@@ -32,7 +37,7 @@ class dome_di extends DI{
             return new dome_c(new dome_a(),new dome_b());
         }));
         //注册虚拟方法
-        $di->domeC(new \LSYS\DI\VirtualCallback(dome_c::class));
+       // $di->domeC(new \LSYS\DI\VirtualCallback(dome_c::class));
         return $di;
     }
 }
