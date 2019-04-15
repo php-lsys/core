@@ -11,6 +11,8 @@ use LSYS\DI\Method;
 use LSYS\DI\Share;
 use LSYS\DI\Singleton;
 use LSYS\DI\VirtualCallback;
+use LSYS\DI\ShareCache;
+use LSYS\DI\SingletonCache;
 class DI{
     /**
      * @var array
@@ -76,12 +78,13 @@ class DI{
         return isset($this->_set[$method]);
     }
     /**
-     * 删除在当前依赖管理器中已存在的某个依赖实例
+     * 移除指定方法注册并移除已注册的实例
      * 即移除已存在的单例或共享对象
      * @param string $method
      */
     public function __unset($method){
         if (!isset($this->_set[$method]))return;
+        unset($this->_set[$method]);
         $call=$this->_set[$method];
         if ($call instanceof Singleton){
             unset($this->_cache[$method]);
@@ -115,12 +118,31 @@ class DI{
         }
         $call=$this->_set[$method];
         if($call instanceof Singleton){
+            if (isset($param[0])&&$param[0] instanceof SingletonCache) {
+                $obj=$param[0]->replace(isset($this->_cache[$method])?$this->_cache[$method]:null);
+                if(is_null($obj)){
+                    unset($this->_cache[$method]);
+                }else{
+                    $this->_cache[$method]=$obj;
+                }
+                return $this;
+            }
             if (!array_key_exists($method, $this->_cache)){
                 $this->_cache[$method]=call_user_func_array($call, $param);
             }
             $obj=$this->_cache[$method];
 			unset($call);
         }elseif($call instanceof Share){
+            if (isset($param[0])&&$param[0] instanceof ShareCache) {
+                $handle=strval(call_user_func_array(array($call,'handle'), $param[0]->handleArgs()));
+                $obj=$param[0]->replace(isset($this->_cache[$method])?$this->_cache[$method]:null);
+                if(is_null($obj)){
+                    unset($this->_cache_share[$method][$handle]);
+                }else{
+                    $this->_cache_share[$method][$handle]=$obj;
+                }
+                return $this;
+            }
             $handle=strval(call_user_func_array(array($call,'handle'), $param));
             if (!isset($this->_cache_share[$method])||!array_key_exists($handle, $this->_cache_share[$method])){
                 $this->_cache_share[$method][$handle]=call_user_func_array($call, $param);
