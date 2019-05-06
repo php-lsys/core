@@ -47,10 +47,13 @@ class DI{
      * 设置当前类的依赖管理器实例
      * @param DI $di
      */
-    public static function set($di){
+    public static function set($di=null){
         $class=get_called_class();
-        (!is_callable($di))&&assert($di instanceof $class,'Argument 1 passed to set() must be an instance of '.$class);
-        self::$_di_cache[$class]=$di;
+		if(is_null($di))unset(self::$_di_cache[$class]);
+		else{
+			(!is_callable($di))&&assert($di instanceof $class,'Argument 1 passed to set() must be an instance of '.$class);
+			self::$_di_cache[$class]=$di;
+		}
         return __CLASS__;
     }
     /**
