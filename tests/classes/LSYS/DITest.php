@@ -39,13 +39,15 @@ final class DITest extends TestCase
         $this->assertTrue($di->test2('dddd')!==$di->test2('dddd1'));
         $this->assertTrue($di->test3('dddd')!==$di->test3('dddd'));
         $d1=$di->test1();
-        unset($di->test1);
+        $di->test1(new \LSYS\DI\ShareCache());
         $d2=$di->test1();
         $this->assertTrue($d1!==$d2);
         $d1=$di->test2('dddd');
-        unset($di->test2);
+        $di->test2(new \LSYS\DI\ShareCache());
         $d2=$di->test2('dddd');
         $this->assertTrue($d1!==$d2);
+		unset($di->test1);
+		$this->assertFalse(isset($di->test1));
     }
     public function testDiSET()
     {

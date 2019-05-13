@@ -87,7 +87,6 @@ class DI{
      */
     public function __unset($method){
         if (!isset($this->_set[$method]))return;
-        unset($this->_set[$method]);
         $call=$this->_set[$method];
         if ($call instanceof Singleton){
             unset($this->_cache[$method]);
@@ -95,6 +94,7 @@ class DI{
         if($call instanceof Share){
             unset($this->_cache_share[$method]);
         }
+		unset($this->_set[$method]);
     }
     /**
      * 注册或调用某个方法
