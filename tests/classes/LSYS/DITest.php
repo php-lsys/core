@@ -51,6 +51,7 @@ final class DITest extends TestCase
     }
     public function testDiSET()
     {
+        $test=null;
         \LSYS\dome_test_di::set(function()use(&$test){
             $test=new class extends \LSYS\dome_test_di{};
             return $test;
