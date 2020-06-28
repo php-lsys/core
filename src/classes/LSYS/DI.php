@@ -1,6 +1,5 @@
 <?php
 /**
- * 依赖管理器
  * @author     Lonely <shan.liu@msn.com>
  * @copyright  (c) 2017 Lonely <shan.liu@msn.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
@@ -13,9 +12,12 @@ use LSYS\DI\Singleton;
 use LSYS\DI\VirtualCallback;
 use LSYS\DI\ShareCache;
 use LSYS\DI\SingletonCache;
+/**
+ * 依赖管理器 
+ */
 class DI{
     /**
-     * @var array
+     * @var [object]
      */
     private static $_di_cache=[];
     /**
@@ -40,21 +42,20 @@ class DI{
      * 检测当前类的依赖管理器示例是否设置
      * @return bool
      */
-    public static function has(){
+    public static function has():bool{
         return isset(self::$_di_cache[get_called_class()]);
     }
     /**
      * 设置当前类的依赖管理器实例
      * @param DI $di
      */
-    public static function set($di=null){
+    public static function set($di=null):void{
         $class=get_called_class();
 		if(is_null($di))unset(self::$_di_cache[$class]);
 		else{
-			(!is_callable($di))&&assert($di instanceof $class,'Argument 1 passed to set() must be an instance of '.$class);
+			(!is_callable($di))&&assert($di instanceof static,'Argument 1 passed to set() must be an instance of '.$class);
 			self::$_di_cache[$class]=$di;
 		}
-        return __CLASS__;
     }
     /**
      * @var array
@@ -77,7 +78,7 @@ class DI{
      * @param string $method
      * @return bool
      */
-    public function __isset($method){
+    public function __isset(string $method):bool{
         return isset($this->_set[$method]);
     }
     /**
@@ -85,7 +86,7 @@ class DI{
      * 即移除已存在的单例或共享对象
      * @param string $method
      */
-    public function __unset($method){
+    public function __unset(string $method):void{
         if (!isset($this->_set[$method]))return;
         $call=$this->_set[$method];
         if ($call instanceof Singleton){
@@ -103,7 +104,7 @@ class DI{
      * @throws Exception
      * @return static|mixed
      */
-    public function __call($method,$param=[]){
+    public function __call($method,array $param=[]){
         if (isset($param[0])&&$param[0] instanceof SetMethod){
             if ($param[0] instanceof VirtualCallback){
                 $this->_virtual[$method]=$param[0];

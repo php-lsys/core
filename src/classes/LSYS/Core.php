@@ -1,13 +1,12 @@
 <?php
 /**
- * 核心变量
  * @author     Lonely <shan.liu@msn.com>
  * @copyright  (c) 2017 Lonely <shan.liu@msn.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace LSYS;
 /**
- * @author lonely
+ * 核心环境参数
  */
 abstract class Core{
 	/**
@@ -31,20 +30,25 @@ abstract class Core{
 	 */
 	const DEVELOP  = 4;
 	/**
-	 * [read-only]当前系统运行环境
+	 * 当前系统运行环境
 	 * @var int
 	 */
-	static public $environment=self::PRODUCT;
+	static private $environment=self::PRODUCT;
 	/**
-	 * [read-only]字符编码
+	 * 字符编码
 	 * @var string
 	 */
-	static public $charset='utf-8';
+	static private $charset;
+	/**
+	 * 当前系统版本
+	 * @var string
+	 */
+	static private $version;
 	/**
 	 * 设置全局核心变量
 	 * @param array $settings
 	 */
-	public static function sets(array $settings){
+	public static function sets(array $settings):void{
 		if (isset($settings['charset']))
 		{
 			self::$charset = strtolower($settings['charset']);
@@ -58,5 +62,38 @@ abstract class Core{
 		{
 			self::$environment=$settings['environment'];
 		}
+		if (isset($settings['version']))
+		{
+		    self::$version=strval($settings['version']);
+		}
+	}
+	/**
+	 * 当时环境是否与制定环境变量相同
+	 * @param int $environment
+	 * @return bool
+	 */
+	public static function envIs(int $environment):bool{
+	    return self::$environment===$environment;
+	}
+	/**
+	 * 当前环境变量
+	 * @return int
+	 */
+	public static function env():int{
+	    return self::$environment;
+	}
+	/**
+	 * 当前系统版本号
+	 * @return string
+	 */
+	public static function version():?string{
+	    return self::$version;
+	}
+	/**
+	 * 当前系统字符编码
+	 * @return string
+	 */
+	public static function charset():?string{
+	    return self::$charset;
 	}
 }

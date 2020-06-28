@@ -1,11 +1,13 @@
 <?php
 /**
- * 统一异常基类
  * @author     Lonely <shan.liu@msn.com>
  * @copyright  (c) 2017 Lonely <shan.liu@msn.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace LSYS;
+/**
+ * 基础公共异常基类
+ */
 class Exception extends \Exception {
 	/**
 	 * Creates a new translated exception.
@@ -17,13 +19,9 @@ class Exception extends \Exception {
 	 * @param   Exception       $previous   Previous exception
 	 * @return  void
 	 */
-	public function __construct($message = NULL, $code = 0, \Exception $previous = NULL)
+    public function __construct(string $message = NULL, $code = 0, \Exception $previous = NULL)
 	{
-	    if (!is_int($code))$code=intval($code);
-		// Pass the message and integer code to the parent
 		parent::__construct($message, $code, $previous);
-		// Save the unmodified code
-		// @link http://bugs.php.net/39615
 		$this->code = $code;
 	}
 }

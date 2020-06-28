@@ -8,9 +8,17 @@
 namespace LSYS\DI;
 class SingletonCallback implements Singleton{
     protected $_invoke;
+    /**
+     * 指定对象生成回调函数
+     * @param callable $invoke
+     */
     public function __construct(callable $invoke){
         $this->_invoke=$invoke;
     }
+    /**
+     * {@inheritDoc}
+     * @see \LSYS\DI\Singleton::__invoke()
+     */
     public function __invoke(){
         return call_user_func_array($this->_invoke,func_get_args());
     }

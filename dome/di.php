@@ -1,5 +1,29 @@
 <?php
 use LSYS\DI;
+
+function aa(string $a) {
+    var_dump($a);
+}
+aa(null);
+exit;
+
+class a{
+    public function __construct(int $param) {
+        ;
+    }
+}
+
+class b extends a{
+    public function __construct(string $param) {
+        ;
+    }
+    public function get():int {
+        return "YH001";
+    }
+}
+
+(new b(1))->get();
+exit;
 include __DIR__."/Bootstarp.php";
 //########### di　简易使用　#################
 //------------注册方法--------------------
