@@ -11,7 +11,7 @@ final class CoreTest extends TestCase
            'version'=>'1.0.0'
        ));
        $this->assertEquals(Core::charset(), 'utf-8');
-       $this->assertEquals(Core::environment(), Core::DEVELOP);
+       $this->assertEquals(Core::env(), Core::DEVELOP);
        $this->assertTrue(Core::envIs(Core::DEVELOP));
        $this->assertEquals(Core::version(), '1.0.0');
     }
