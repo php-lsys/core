@@ -15,11 +15,11 @@ class Exception extends \Exception {
 	 *     throw new Exception('Something went terrible wrong');
 	 *
 	 * @param   string          $message    error message
-	 * @param   integer|string  $code       the exception code
+	 * @param   integer|null  $code       the exception code
 	 * @param   Exception       $previous   Previous exception
 	 * @return  void
 	 */
-    public function __construct(string $message = NULL, $code = 0, \Exception $previous = NULL)
+    public function __construct(string $message = NULL, ?int $code = null, \Exception $previous = NULL)
 	{
 		parent::__construct($message, $code, $previous);
 		$this->code = $code;
