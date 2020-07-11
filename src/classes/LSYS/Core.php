@@ -53,7 +53,10 @@ abstract class Core{
 		{
 			self::$charset = strtolower($settings['charset']);
 		}
-		if (function_exists('mb_internal_encoding')&&self::$charset!==null)
+		if(is_null(self::$charset)){
+			self::$charset='utf-8';//default charset
+		}
+		if (function_exists('mb_internal_encoding'))
 		{
 			mb_internal_encoding(self::$charset);
 		}
@@ -93,7 +96,14 @@ abstract class Core{
 	 * 当前系统字符编码
 	 * @return string
 	 */
-	public static function charset():?string{
+	public static function charset():string{
+		if(is_null(self::$charset)){
+			self::$charset='utf-8';//default charset
+			if (function_exists('mb_internal_encoding'))
+			{
+				mb_internal_encoding(self::$charset);
+			}
+		}
 	    return self::$charset;
 	}
 }
